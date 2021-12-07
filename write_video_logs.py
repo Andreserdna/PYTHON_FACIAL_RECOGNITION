@@ -22,9 +22,9 @@ class WriteLogsToText:
 			open(video_log_text_file,"w").close
 			
 			if os.path.exists(video_log_text_file):
-				print("Did not find a log text file,creating new one")
+				#print("Did not find a log text file,creating new one")
 				open(video_log_text_file,"w").close
-				print("Created video log file!")
+				#print("Created video log file!")
 				return video_log_text_file
 			else:
 				print("Found old log file, deleting")
@@ -33,7 +33,7 @@ class WriteLogsToText:
 		except OSError as e:
 			print(e)
 	def writeToText(self, data, file_path):
-		self.createLoggingTextFile()
+		#self.createLoggingTextFile()
 		try:
 			print("opening text file")
 			with open(file_path,"w") as text_file:
@@ -42,28 +42,17 @@ class WriteLogsToText:
 				text_file.close()
 		except IOError as e:
 			print(e)
-	def captureLogs(self):
+	def captureLogs(self,user_name):
+		self.createLoggingTextFile()
 		try:
 			current_samples = 0
-			detected_person_logs = ("{} was detected at {}".format(self.user_names,returnTimeStamp()))
+			detected_person_logs = ("{} was detected at {}".format(user_name,returnTimeStamp()))
 			print(detected_person_logs)
 			self.log_data_list.append(detected_person_logs)
 			print()
-			if len(self.log_file) > 500:
+			if len(self.log_data_list) > 100:
 				print("Data has reached its limit, writing logs to text file")
 				self.writeToText(self.log_data_list,self.log_file)
 				return True
 		except IOError as e:
 			print(e)
-
-
-
-
-	def test(self):
-
-		if os.path.isdir(self.video_log_dir):
-			print("Path exists!!")
-		print(self.log_file)
-
-a = WriteLogsToText()
-a.captureLogs()
