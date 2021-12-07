@@ -16,7 +16,7 @@ andres_image_path = list()
 lola_image_path = list()
 keira_image_path = list()
 YML_EXT = (".yml")
-PATH_TO_YML_FILE = ("C:\\Users\\avale\\Desktop\\PYTHON_SCRIPTS\\OPENCV\\YML\\")
+PATH_TO_YML_FILE = ("C:\\Users\\avale\\Desktop\\PYTHON_SCRIPTS\\OPENCV_2\\PYTHON_FACIAL_RECOGNITION\\YML\\")
 FILE_NAME = ("training_data_multiple_complete.yml")
 
 def getImageID(data_path_andres,data_path_lola,data_path_keira):
@@ -46,35 +46,35 @@ def returnTimeStamp():
 	now = datetime.today().strftime("%Y-%m-%d")
 	return str(now).replace(" ","")
 
-def check_if_yml_exists(path,filename):
+def check_if_yml_exists_and_create(path,filename):
 	#Checking if existing YML file is found,if file is found will
 	#add datetime to end of file
 	yml_file = os.path.join(path,filename)
-	print(yml_file)
 	try:
 		if os.path.isfile(yml_file):
 			print("\nFound existing yml. Creating a new one!")
 			filename = filename[:-4] + "_" + returnTimeStamp() + YML_EXT
 			filename = os.path.join(path,filename)
+			print("Starting recognizer")
+			recognizer.save(filename)
 			print("Created new file, {}".format(filename))
-			return filename
+			return 
 		else:
 			print("Did not find an existing YML file. Creating a new one")
 			filename = os.path.join(path,filename)
 			print("Created new file " ,filename)
-			return filename
+			recognizer.save(yml_file)
+			return 
 	except OSError as e:
 		print(e)
 
 
 #getImageID(data_path_andres,data_path_lola)
 def main():
-	#check_if_yml_exists(PATH_TO_YML_FILE,FILE_NAME)
 	Ids,faces = getImageID(data_path_andres,data_path_lola,data_path_keira)
 	print("Training the model")
 	recognizer.train(faces,np.array(Ids))
-	check_if_yml_exists(PATH_TO_YML_FILE,FILE_NAME)
-	recognizer.save(FILE_NAME)
+	check_if_yml_exists_and_create(PATH_TO_YML_FILE,FILE_NAME)
 	print("Success! .YML was saved under YML folder")
 	cv2.destroyAllWindows()
 
