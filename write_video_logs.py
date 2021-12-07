@@ -1,6 +1,6 @@
 from datetime import datetime
 import os
-from face_trainer_multiple import returnTimeStamp
+from face_trainer_multiple import returnTimeStamp, returnLogTime
 
 #TODO add descriptions for your functions 
 class WriteLogsToText:
@@ -10,10 +10,6 @@ class WriteLogsToText:
 		self.text_extension = ".txt"
 		self.log_file = self.video_log_dir + str("capture_logs_") + returnTimeStamp() + self.text_extension
 		self.log_data_list = list()
-		#self.detected_person_logs = detected_person_logs
-		self.user_names =  {1:{"name":"Andres "},
-	 	 				    2:{"name":"Lola "},
-	 	  					3:{"name":"Keira "}}
 
 	def createLoggingTextFile(self):
 		try:
@@ -32,19 +28,18 @@ class WriteLogsToText:
 
 	def writeToText(self, data, file_path):
 		try:
-			print("opening text file")
 			with open(file_path,"w") as text_file:
 				for line in data:
 					text_file.write(line + "\n")
 				text_file.close()
+				print("Wrote data to: \n{}".format(self.log_file))
 		except IOError as e:
 			print(e)
 
-	def captureLogs(self,user_name):
+	def captureLogs(self,user_name,conf):
 		self.createLoggingTextFile()
 		try:
-			current_samples = 0
-			detected_person_logs = ("{} was detected at {}".format(user_name,returnTimeStamp()))
+			detected_person_logs = ("{} was detected at {}-{} Confidence percenatage {}".format(user_name,returnTimeStamp(),returnLogTime(),conf))
 			print(detected_person_logs)
 			self.log_data_list.append(detected_person_logs)
 			print()
