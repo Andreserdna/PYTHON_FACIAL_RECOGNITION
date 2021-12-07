@@ -2,7 +2,7 @@ from datetime import datetime
 import os
 from face_trainer_multiple import returnTimeStamp
 
-
+#TODO add descriptions for your functions 
 class WriteLogsToText:
 #Script used to write logs for who is detected
 	def __init__(self):
@@ -14,7 +14,6 @@ class WriteLogsToText:
 		self.user_names =  {1:{"name":"Andres "},
 	 	 				    2:{"name":"Lola "},
 	 	  					3:{"name":"Keira "}}
-		#self.log_list = log_list
 
 	def createLoggingTextFile(self):
 		try:
@@ -22,9 +21,7 @@ class WriteLogsToText:
 			open(video_log_text_file,"w").close
 			
 			if os.path.exists(video_log_text_file):
-				#print("Did not find a log text file,creating new one")
 				open(video_log_text_file,"w").close
-				#print("Created video log file!")
 				return video_log_text_file
 			else:
 				print("Found old log file, deleting")
@@ -32,8 +29,8 @@ class WriteLogsToText:
 				return video_log_text_file
 		except OSError as e:
 			print(e)
+
 	def writeToText(self, data, file_path):
-		#self.createLoggingTextFile()
 		try:
 			print("opening text file")
 			with open(file_path,"w") as text_file:
@@ -42,6 +39,7 @@ class WriteLogsToText:
 				text_file.close()
 		except IOError as e:
 			print(e)
+
 	def captureLogs(self,user_name):
 		self.createLoggingTextFile()
 		try:

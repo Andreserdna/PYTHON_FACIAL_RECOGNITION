@@ -4,9 +4,7 @@ import os
 from write_video_logs import *
 
 
-
-#global our_home_data
-
+#TODO add descriptions for your functions 
 class InitiateHouseCamera:
 	def __init__(self):
 		self.user_id = 0
@@ -21,7 +19,6 @@ class InitiateHouseCamera:
 	 	  		  			  2:{"name":"Lola "},
 	 	  		  			  3:{"name":"Keira "}}
 
-
 	def InitateCameraAndIdentify(self):
 		write_log_file = WriteLogsToText()
 		cascade_path = os.path.join(os.getcwd() + "\\assets\\haarcascade_frontalface_default.xml")
@@ -30,7 +27,6 @@ class InitiateHouseCamera:
 		camera =  cv2.VideoCapture(0)
 		recognizer = cv2.face.LBPHFaceRecognizer_create()
 		recognizer.read(self.yml_path)
-		# write_file = write_log_file.createLoggingTextFile()
 		while True:
 			ret,img = camera.read()
 			gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -49,8 +45,6 @@ class InitiateHouseCamera:
 						if write_log_file.captureLogs(self.user_id) == True:
 							camera.release()
 							cv2.destroyAllWindows()
-
-
 					cv2.putText(img,str(self.user_id + conf),self.bottomLeftCornerText,self.font,self.fontScale,self.fontColor,self.lineType)
 			cv2.imshow("FACE", img)
 			if(cv2.waitKey(1) == ord('q')):
