@@ -8,17 +8,17 @@ import time as time_
 #A simple python script which creates the training model using CV2. This script accepts up to 3
 #datasets. Once the program is finished it creates a YML file containg the trained data
 
+#TODO cleanup this script
+#TODO assure user only has 1 YML file in directory
+
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 data_path_andres = "C:\\Users\\avale\\Desktop\\PYTHON_SCRIPTS\\OPENCV\\dataset\\Andres"
 data_path_lola = "C:\\Users\\avale\\Desktop\\PYTHON_SCRIPTS\\OPENCV\\dataset\\lola"
 data_path_keira = "C:\\Users\\avale\\Desktop\\PYTHON_SCRIPTS\\OPENCV\\dataset\\KeiraBak"
-andres_image_path = list()
-lola_image_path = list()
-keira_image_path = list()
 YML_EXT = (".yml")
 PATH_TO_YML_FILE = ("C:\\Users\\avale\\Desktop\\PYTHON_SCRIPTS\\OPENCV_2\\PYTHON_FACIAL_RECOGNITION\\YML\\")
-FILE_NAME = ("training_data_multiple_complete.yml")
+FILE_NAME = ("training_data.yml")
 
 def getImageID(data_path_andres,data_path_lola,data_path_keira):
 	#TODO add error handling for user provided paths

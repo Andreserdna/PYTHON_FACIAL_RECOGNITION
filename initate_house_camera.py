@@ -9,10 +9,12 @@ from write_video_logs import *
 #TODO create another script that checks the size of the log file
 #TODO Create a script that sends an SMS if a stranger is detected
 #TODO Create a function to classify different memebers of your hoome. Write the detections to log file
+#TODO create a function to clean out all other YML files, make sure user only has one YML file in the directory
+
 class InitiateHouseCamera:
 	def __init__(self):
 		self.user_id = 0
-		self.yml_path = os.path.join(os.getcwd() + "\\YML\\training_data_multiple_complete.yml")
+		self.yml_path = os.path.join(os.getcwd() + "\\YML\\training_data.yml")
 		self.font = (cv2.FONT_HERSHEY_SIMPLEX)
 		self.fontColor = (255,255,255)
 		self.fontScale = 1
