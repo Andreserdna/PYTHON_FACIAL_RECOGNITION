@@ -5,6 +5,10 @@ from write_video_logs import *
 
 
 #TODO add descriptions for your functions 
+#TODO Create an infinite loop to grab all the logs
+#TODO create another script that checks the size of the log file
+#TODO Create a script that sends an SMS if a stranger is detected
+#TODO Create a function to classify different memebers of your hoome. Write the detections to log file
 class InitiateHouseCamera:
 	def __init__(self):
 		self.user_id = 0
@@ -15,9 +19,9 @@ class InitiateHouseCamera:
 		self.lineType = 2
 		self.bottomLeftCornerText = (10,255)
 		self.user_id = 0
-		self.our_home_data = {1:{"name":"Andres "},
-	 	  		  			  2:{"name":"Lola "},
-	 	  		  			  3:{"name":"Keira "}}
+		self.our_home_data = {1:{"name":"Andres"},
+	 	  		  			  2:{"name":"Lola"},
+	 	  		  			  3:{"name":"Keira"}}
 
 	def InitateCameraAndIdentify(self):
 		write_log_file = WriteLogsToText()
@@ -42,9 +46,10 @@ class InitiateHouseCamera:
 					break
 				for house_id,house_names in self.our_home_data.items():
 					if house_id == 1:
-						if write_log_file.captureLogs(self.user_id) == True:
+						if write_log_file.captureLogs(self.user_id,str(formated_confidence)) == True:
 							camera.release()
 							cv2.destroyAllWindows()
+							return
 					cv2.putText(img,str(self.user_id + conf),self.bottomLeftCornerText,self.font,self.fontScale,self.fontColor,self.lineType)
 			cv2.imshow("FACE", img)
 			if(cv2.waitKey(1) == ord('q')):

@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from PIL import Image
 from datetime import datetime
+import time as time_
 
 #A simple python script which creates the training model using CV2. This script accepts up to 3
 #datasets. Once the program is finished it creates a YML file containg the trained data
@@ -43,8 +44,11 @@ def getImageID(data_path_andres,data_path_lola,data_path_keira):
 
 def returnTimeStamp():
 	#Quick function to return time, user to add to end of new yml file
-	now = datetime.today().strftime("%Y-%m-%d")
+	now = datetime.today().strftime("%Y-%m-%d%H%M%S")
 	return str(now).replace(" ","")
+
+def returnLogTime():
+	return int(round(time_.time() * 1000))
 
 def check_if_yml_exists_and_create(path,filename):
 	#Checking if existing YML file is found,if file is found will
