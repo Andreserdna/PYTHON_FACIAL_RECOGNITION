@@ -1,10 +1,11 @@
 import os
+import shutil
 import cv2
 import numpy as np
 
 #Replace the path to YOUR haarcascade xml!!
-cascPath = "C:\\Users\\avale\\Desktop\\PYTHON_SCRIPTS\\OPENCV\\assets\\haarcascade_frontalface_default.xml"
-data_path_folder = "C:\\Users\\avale\\Desktop\\PYTHON_SCRIPTS\\OPENCV\\dataset\\"
+cascPath = os.path.join(os.getcwd() + "\\assets\\haarcascade_frontalface_default.xml")
+data_path_folder = os.path.join(os.getcwd() + "\\dataset\\")
 faceDetect = cv2.cv2.CascadeClassifier(cascPath)
 
 print("Initiating facial capture")
@@ -25,13 +26,24 @@ class InitiateDataCapture:
 			if not os.path.exists(self.new_folder_path):
 				print("Did not find a folder with that user name\nCreating new one")
 				os.makedirs(self.new_folder_path)
+			elif os.path.exists(self.new_folder_path):
+				print("Found existing folder with same do you wish to delete?")
+				answer = input ("y/N: ")
+				if answer == "y":
+					print("Deleting files")
+					shutil.rmtree(self.new_folder_path)
+					print("Done, creating new directory")
+					os.makedirs(self.new_folder_path)
+				if answer == 'N':
+					print("adding new images to existing dataset")
+					pass
 		except OSError as e:
 			print(e)
-		self.new_folder_path = str(self.new_folder_path + "{}".format("\\"))
+
 	def capture_facial_samples(self):
 		#method used for capturing the data
 		print("Initiating the camera, may take up to 45 seconds")
-		cam = cv2.VideoCapture(0)
+		cam = cv2.VideoCapture(0,cv2.CAP_DSHOW)
 		while (self.sampleNum<100):
 			ret,img = cam.read()
 			gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -49,14 +61,11 @@ class InitiateDataCapture:
 		cam.release()
 		cv2.destroyAllWindows()
 		print("Finished capture dataset was stored under \n{}".format(self.new_folder_path))
+
 def main():
 	initiate = InitiateDataCapture(user_name, user_id, new_folder_path)
 	initiate.create_data_folder()
 	initiate.capture_facial_samples()
-	# cam.release()
-	# cv2.destroyAllWindows()
-	# print("Finished dataset was stored under \n{}".format(new_path))
-
 
 if __name__ == '__main__':
 	main()
