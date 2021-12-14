@@ -44,7 +44,7 @@ class InitiateDataCapture:
 		#method used for capturing the data
 		print("Initiating the camera, may take up to 45 seconds")
 		cam = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-		while (self.sampleNum<100):
+		while (self.sampleNum<500):
 			ret,img = cam.read()
 			gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 			faces = faceDetect.detectMultiScale(gray,1.3,5)
@@ -56,7 +56,7 @@ class InitiateDataCapture:
 				cv2.waitKey(100)
 			cv2.imshow("FACE", img)
 			cv2.waitKey(1)
-			if(self.sampleNum>100):
+			if(self.sampleNum>500):
 				break
 		cam.release()
 		cv2.destroyAllWindows()

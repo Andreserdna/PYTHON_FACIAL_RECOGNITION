@@ -39,6 +39,25 @@ def getImageID(data_set):
 		return IDs,faces
 	except ValueError as e:
 		print("Did you pass the correct path?", e)
+def getImageIDAndLabels(data_set,detector):
+
+	print("Retreiving faces from user provided datasets")
+	try:
+		FaceSamples = list()
+		IDs = list()
+		for image in data_set:
+			faceImg = Image.open(image).convert("L")
+			faceNP = np.array(faceImg,'uint8')
+			ID = int(os.path.split(image)[-1].split('.')[1])
+			faces = detector.detectMultiScale(faceNP)
+			for (x,y,w,h) in faces:
+				FaceSamples.append(faceNP[y:y+h,x:x+w])
+				IDs.append(ID)
+			cv2.imshow("training",faceNP)
+			cv2.waitKey(10)
+		return FaceSamples,IDs
+	except ValueError as e:
+		print("Did you pass the correct path?", e)
 
 def returnTimeStamp():
 	#Quick function to return time, user to add to end of new yml file
@@ -73,7 +92,7 @@ def check_if_yml_exists_and_create(path,filename):
 def main():
 	image_count = 0
 	retrieve_datasets_paths(data_path,image_list)
-	Ids,faces = getImageID(image_list)
+	faces,Ids = getImageIDAndLabels(image_list,detector)
 	print("Training the model")
 	recognizer.train(faces,np.array(Ids))
 	check_if_yml_exists_and_create(PATH_TO_YML_FILE,FILE_NAME)
@@ -82,6 +101,8 @@ def main():
 
 if __name__ == '__main__':
 	recognizer = cv2.face.LBPHFaceRecognizer_create()
+	haar_file = os.path.join(os.getcwd() + "\\assets\\haarcascade_frontalface_default.xml")
+	detector = cv2.CascadeClassifier(haar_file)
 	data_path = os.path.join(os.getcwd() + "\\dataset\\")
 	dataset_directories = list()
 	image_list = list()
