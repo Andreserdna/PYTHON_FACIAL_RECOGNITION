@@ -42,12 +42,14 @@ class InitiateHouseCamera:
 				str_conf = "Confidence "+ str(formated_confidence) + "%"
 				if conf<100:
 					user_id = name[user_id]
+					write_log_file.captureLogs(user_id, str_conf)
+
+					if write_log_file.checkLogFileSize() == True:
+						camera.release()
+						cv2.destroyAllWindows()
+						return
 				else:
 					user_id = "Unknown"
-				if write_log_file.captureLogs(user_id, str_conf) == True:
-					camera.release()
-					cv2.destroyAllWindows()
-					return
 				cv2.putText(img,str(str(user_id) + str_conf),self.bottomLeftCornerText,self.font,self.fontScale,self.fontColor,self.lineType)
 				cv2.imshow("FACE", img)
 			if(cv2.waitKey(1) == ord('q')):
