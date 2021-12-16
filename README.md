@@ -4,3 +4,5 @@ Please Follow the folder structure
 - assets
 - dataset
 - YML
+- video_logs_text
+
