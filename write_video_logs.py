@@ -45,7 +45,6 @@ class WriteLogsToText:
 
 		except IOError as e:
 			print(e)
-		
 
 	def captureLogs(self,user_name,conf):
 		#Takes 2 arguments user_name and conf the
@@ -62,9 +61,10 @@ class WriteLogsToText:
 				self.writeToText(self.log_data_list,self.log_file)
 		except IOError as e:
 			print(e)
+	
 	def checkLogFileSize(self):
 		#Checking the size of the logfile, once the size limit is reached function exits and writes data
-		MAX_SIZE = 60000 # equals to 60KB
+		MAX_SIZE = 80000 # equals to 60KB
 		file_size = os.path.getsize(self.log_file)
 		if file_size >= MAX_SIZE:
 			print("File has reaCHED its size limit")
